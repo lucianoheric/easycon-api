@@ -1,5 +1,4 @@
 package com.tribosoftec.easycon_api.domain;
-
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,29 +19,34 @@ import lombok.NoArgsConstructor;
 import lombok.Builder;
 
 @Entity
-@Table(name = "resident")
+@Table(name = "person")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Resident {
+public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "residence_id", nullable = false)
-    private Residence residence;
-
-    @Column(nullable = false, length = 250)
+    @Column(nullable = false, length = 150)
     private String name;
 
-    @Column(columnDefinition = "text")
-    private String observation;
+    @Column(name = "short_name", length = 50)
+    private String shortName;
 
-    @Column(name = "is_default", nullable = false)
-    private Boolean isDefault = false;
+    @ManyToOne
+    @JoinColumn(name = "person_type_id", nullable = false)
+    private PersonType personType;
+
+    @Column(nullable = false, length = 25)
+    private String document;
+
+    private OffsetDateTime activatedAt;
+
+    @Column(nullable = false)
+    private Boolean active = true;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
@@ -52,7 +56,10 @@ public class Resident {
     @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
 
-    @OneToMany(mappedBy = "resident")
-    private List<ProfileDetail> profileDetails;
+    @OneToMany(mappedBy = "person")
+    private List<Condm> condominios;
+
+    @OneToMany(mappedBy = "person")
+    private List<Profile> profiles;
 }
 
