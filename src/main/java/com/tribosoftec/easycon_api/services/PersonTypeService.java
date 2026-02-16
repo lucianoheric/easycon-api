@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import com.tribosoftec.easycon_api.domain.PersonType;
+import com.tribosoftec.easycon_api.domain.dtos.responses.PersonTypeResponseDto;
 import com.tribosoftec.easycon_api.repositories.PersonTypeRepository;
 
 @Service
@@ -40,18 +41,33 @@ public class PersonTypeService {
         }
     }
 
-    public PersonType delete(Long id) {
+    public PersonTypeResponseDto delete(Long id) {
         try {
             if (!personTypeRepository.existsById(id)) {
                 throw new RuntimeException("Person type not found with ID: " + id);
             }
-            PersonType personType = findById(id);
+            PersonType personType = this.findById(id);
+            PersonTypeResponseDto responseDto = new PersonTypeResponseDto(id, null, null);
+            responseDto.setId(personType.getId().longValue());
+            responseDto.setName(personType.getName());
+            responseDto.setDescription(personType.getDescription());
             personTypeRepository.deleteById(id);
-            return personType;
+            return responseDto;
         } catch (Exception e) {
             throw new RuntimeException("Error deleting person type", e);
         }
     }
-
+    
+    public PersonTypeResponseDto update(PersonTypeResponseDto personType) {
+        try {
+            PersonType existingPersonType = this.findById(personType.getId());
+            existingPersonType.setName(personType.getName());
+            existingPersonType.setDescription(personType.getDescription());
+            PersonType updatedPersonType = personTypeRepository.save(existingPersonType);
+            return new PersonTypeResponseDto(updatedPersonType.getId().longValue(), updatedPersonType.getName(), updatedPersonType.getDescription());
+        } catch (Exception e) {
+            throw new RuntimeException("Error updating person type", e);
+        }
+    }
 
 }

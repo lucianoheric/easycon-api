@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tribosoftec.easycon_api.domain.PersonType;
+import com.tribosoftec.easycon_api.domain.dtos.responses.PersonTypeResponseDto;
 import com.tribosoftec.easycon_api.services.PersonTypeService;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -13,7 +14,8 @@ import java.util.List;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 
@@ -59,11 +61,20 @@ public class PersonTypeController {
 
     
     @DeleteMapping("/{id}")
-    public PersonType deletePersonType(@PathVariable Long id) {
+    public PersonTypeResponseDto deletePersonType(@PathVariable Long id) {
         try {
             return personTypeService.delete(id);
         } catch (Exception e) {
             throw new RuntimeException("Error deleting person type", e);        
+        }
+    }
+
+    @PutMapping()
+    public PersonTypeResponseDto updatePersonType(@RequestBody PersonTypeResponseDto personType) {        
+        try {
+            return personTypeService.update(personType);
+        } catch (Exception e) {
+            throw new RuntimeException("Error updating person type", e);        
         }
     }
 

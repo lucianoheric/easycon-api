@@ -9,17 +9,12 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.List;
 
 
 @Entity
 @Table(name = "person_type")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class PersonType {
 
     @Id
@@ -34,4 +29,40 @@ public class PersonType {
 
     @OneToMany(mappedBy = "personType")
     private List<Person> persons;
+
+    public PersonType(Integer id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
+
+     public PersonType() {
+        //TODO Auto-generated constructor stub
+    }
+
+
+    public Integer getId() {
+        return id;
+    }   
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 }

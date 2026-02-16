@@ -10,7 +10,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import java.time.OffsetDateTime;
+
+import java.sql.Timestamp;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,6 +37,9 @@ public class Person {
     @Column(name = "short_name", length = 50)
     private String shortName;
 
+    @Column(name = "email", nullable = false, length = 150)
+    private String email;
+
     @ManyToOne
     @JoinColumn(name = "person_type_id", nullable = false)
     private PersonType personType;
@@ -43,18 +47,20 @@ public class Person {
     @Column(nullable = false, length = 25)
     private String document;
 
-    private OffsetDateTime activatedAt;
+    @CreationTimestamp
+    @Column(name = "activated_at", nullable = true)
+    private Timestamp activatedAt;
 
     @Column(nullable = false)
     private Boolean active = true;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
-    private OffsetDateTime createdAt;
+    private Timestamp createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at")
-    private OffsetDateTime updatedAt;
+    private Timestamp updatedAt;
 
     @OneToMany(mappedBy = "person")
     private List<Condm> condominios;
