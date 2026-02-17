@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tribosoftec.easycon_api.domain.dtos.requests.PersonRequestDto;
+import com.tribosoftec.easycon_api.domain.dtos.requests.PersonRequestUpdateDto;
 import com.tribosoftec.easycon_api.domain.dtos.responses.PersonResponseDto;
 import com.tribosoftec.easycon_api.services.PersonService;
 
@@ -14,6 +15,9 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+
+
 
 
 
@@ -45,6 +49,16 @@ public class PersonController {
     @GetMapping("/email/{email}")
     public PersonResponseDto getPersonByEmail(@PathVariable String email) {
         return personService.findPersonByEmail(email);    
+    }
+
+    @GetMapping("/activate/{id}")
+    public PersonResponseDto activatePerson(@PathVariable Long id) {
+        return personService.setPersonActivatedAt(id);
+    }
+    
+    @PutMapping
+    public PersonResponseDto updatePerson(@RequestBody PersonRequestUpdateDto entity) {        
+        return personService.updatePerson(entity);
     }
 
 }

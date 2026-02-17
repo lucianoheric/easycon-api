@@ -9,4 +9,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
     @Query(value = "SELECT * FROM person p WHERE p.email = :email", nativeQuery = true)
     Person findByEmail(String email);
+
+    @Query(value = "UPDATE person SET activated_at = NOW() WHERE id = :id RETURNING *", nativeQuery = true)
+    Person setActivatedAtPerson(Long id);    
 }

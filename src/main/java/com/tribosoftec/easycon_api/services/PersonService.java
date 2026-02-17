@@ -8,9 +8,15 @@ import org.springframework.stereotype.Service;
 import com.tribosoftec.easycon_api.domain.Person;
 import com.tribosoftec.easycon_api.domain.PersonType;
 import com.tribosoftec.easycon_api.domain.dtos.requests.PersonRequestDto;
+import com.tribosoftec.easycon_api.domain.dtos.requests.PersonRequestUpdateDto;
 import com.tribosoftec.easycon_api.domain.dtos.responses.PersonResponseDto;
 import com.tribosoftec.easycon_api.domain.dtos.responses.PersonTypeResponseDto;
-import com.tribosoftec.easycon_api.repositories.PersonRepository; 
+import com.tribosoftec.easycon_api.repositories.PersonRepository;
+
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.sql.Timestamp;
 
 @Service
 public class PersonService {
@@ -24,6 +30,26 @@ public class PersonService {
     @Autowired
     private PersonTypeService personTypeService;
 
+    public PersonResponseDto getPerson(Person person){
+        PersonType personType = person.getPersonType();
+        PersonTypeResponseDto personTypeResponseDto = new PersonTypeResponseDto(
+                personType.getId().longValue(),
+                personType.getName(),
+                personType.getDescription()
+        );
+        return new PersonResponseDto(
+                person.getId(),
+                person.getName(),
+                person.getShortName(),
+                personTypeResponseDto,
+                person.getDocument(),
+                person.getActive(),
+                person.getEmail(),
+                person.getActivatedAt(),
+                person.getCreatedAt(),
+                person.getUpdatedAt()
+        );
+    }
            
     public PersonResponseDto createPerson(PersonRequestDto person) {
         try {   
@@ -90,25 +116,7 @@ public class PersonService {
         try {
             Person person = personRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Person not found with ID: " + id));
-            PersonType personType = person.getPersonType();
-            PersonTypeResponseDto personTypeResponseDto = new PersonTypeResponseDto(
-                    personType.getId().longValue(),
-                    personType.getName(),
-                    personType.getDescription()
-            );
-            return new PersonResponseDto(
-                    person.getId(),
-                    person.getName(),
-                    person.getShortName(),
-                    personTypeResponseDto,
-                    person.getDocument(),
-                    person.getActive(),
-                    person.getEmail(),
-                    person.getActivatedAt(),
-                    person.getCreatedAt(),
-                    person.getUpdatedAt()
-
-            );
+            return this.getPerson(person);
         } catch (Exception e) {
             throw new RuntimeException("Error retrieving person by ID", e);
         }
@@ -118,30 +126,56 @@ public class PersonService {
     public PersonResponseDto findPersonByEmail(String email) {
         try {
             Person person = personRepository.findByEmail(email);
-
             if (person == null) {
                 throw new RuntimeException("Person not found with email: " + email);
             }            
-            PersonType personType = person.getPersonType();
-            PersonTypeResponseDto personTypeResponseDto = new PersonTypeResponseDto(
-                    personType.getId().longValue(),
-                    personType.getName(),
-                    personType.getDescription()
-            );
-            return new PersonResponseDto(
-                    person.getId(),
-                    person.getName(),
-                    person.getShortName(),
-                    personTypeResponseDto,
-                    person.getDocument(),
-                    person.getActive(),
-                    person.getEmail(),
-                    person.getActivatedAt(),
-                    person.getCreatedAt(),
-                    person.getUpdatedAt()
-            );
+            return this.getPerson(person);
         } catch (Exception e) {
             throw new RuntimeException("Error retrieving person by email", e);
+        }
+    }
+
+
+    public PersonResponseDto deletePerson(Long id) {
+        try {
+            if (!personRepository.existsById(id)) {
+                throw new RuntimeException("Person not found with ID: " + id);
+            }
+            Person person = personRepository.findById(id).orElseThrow(() -> new RuntimeException("Person not found with ID: " + id));
+            PersonResponseDto responseDto = this.getPerson(person);
+            personRepository.deleteById(id);
+            return responseDto;
+        } catch (Exception e) {
+            throw new RuntimeException("Error deleting person", e);
+        }
+    }
+
+
+    public PersonResponseDto setPersonActivatedAt(Long id) {
+        try {
+            Person person = personRepository.setActivatedAtPerson(id);
+            return this.getPerson(person);
+        } catch (Exception e) {
+            throw new RuntimeException("Error setting person's activated_at", e);
+        }
+    }
+
+
+    public PersonResponseDto updatePerson(PersonRequestUpdateDto person) {
+        try {
+            Person existingPerson = personRepository.findById(person.getId())
+                    .orElseThrow(() -> new RuntimeException("Person not found with ID: " + person.getId()));
+            existingPerson.setName(person.getName());
+            existingPerson.setShortName(person.getShortName());
+            existingPerson.setEmail(person.getEmail());
+            existingPerson.setDocument(person.getDocument());
+            existingPerson.setActive(person.isActive());
+            PersonType personType = personTypeService.findById(person.getPersonTypeId());
+            existingPerson.setPersonType(personType);
+            Person updatedPerson = personRepository.save(existingPerson);
+            return this.getPerson(updatedPerson);
+        } catch (Exception e) {
+            throw new RuntimeException("Error updating person", e);
         }
     }
 

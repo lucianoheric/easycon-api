@@ -19,8 +19,6 @@ import lombok.NoArgsConstructor;
 
 import lombok.Builder;
 
-import java.time.OffsetDateTime;
-
 @Entity
 @Table(name = "profile")
 @Data

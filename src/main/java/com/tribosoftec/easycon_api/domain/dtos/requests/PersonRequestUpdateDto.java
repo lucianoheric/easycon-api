@@ -10,9 +10,8 @@ public class PersonRequestUpdateDto {
     private Long personTypeId;
     private String document;
     private boolean active;
-    private java.sql.Timestamp activated_at;
 
-    public PersonRequestUpdateDto(Long id, String name, String shortName, String email, Long personTypeId, String document, boolean active, java.sql.Timestamp activated_at) {
+    public PersonRequestUpdateDto(Long id, String name, String shortName, String email, Long personTypeId, String document, boolean active) {
         this.id = id;
         this.name = name;
         this.shortName = shortName;
@@ -20,7 +19,6 @@ public class PersonRequestUpdateDto {
         this.personTypeId = personTypeId;
         this.document = document;
         this.active = active;
-        this.activated_at = activated_at;
     }
 
     public PersonRequestUpdateDto() {
@@ -82,14 +80,6 @@ public class PersonRequestUpdateDto {
 
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-    public java.sql.Timestamp getActivated_at() {
-        return activated_at;
-    }
-
-    public void setActivated_at(java.sql.Timestamp activated_at) {
-        this.activated_at = activated_at;
     }
 
 }
