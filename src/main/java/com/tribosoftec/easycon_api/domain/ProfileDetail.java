@@ -10,7 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import java.time.OffsetDateTime;
+import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,17 +37,17 @@ public class ProfileDetail {
     @JoinColumn(name = "resident_id", nullable = false)
     private Resident resident;
 
-    private OffsetDateTime startedAt;
-    private OffsetDateTime endedAt;
+    private Timestamp startedAt;
+    private Timestamp endedAt;
 
     @Column(nullable = false)
     private Boolean active = true;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
-    private OffsetDateTime createdAt;
+    private Timestamp createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at")
-    private OffsetDateTime updatedAt;
+    private Timestamp updatedAt;
 }
