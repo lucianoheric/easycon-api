@@ -29,7 +29,7 @@ public class Resident {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "residence_id", nullable = false)

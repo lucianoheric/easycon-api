@@ -25,6 +25,11 @@ public class PersonService {
     @Autowired
     private PersonTypeService personTypeService;
 
+    public Person findById(Long id){
+        return personRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Person not found with ID: " + id));
+    }
+
     public PersonResponseDto getPerson(Person person){
         PersonType personType = person.getPersonType();
         PersonTypeResponseDto personTypeResponseDto = new PersonTypeResponseDto(

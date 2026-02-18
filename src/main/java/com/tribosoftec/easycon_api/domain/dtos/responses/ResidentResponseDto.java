@@ -14,6 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ResidentResponseDto {
 
+    private Long id;
     private ResidenceResponseDto residence;
     private String name;
     private String observation;

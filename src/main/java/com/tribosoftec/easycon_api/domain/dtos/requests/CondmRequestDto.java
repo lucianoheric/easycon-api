@@ -11,6 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CondmRequestDto {
 
+
+    private Long id;
     private Long person_id;
     private String name;       
     private String description;
@@ -18,5 +20,6 @@ public class CondmRequestDto {
     private String street;
     private String number;
     private String complement;
+    private Boolean active;
 
 }

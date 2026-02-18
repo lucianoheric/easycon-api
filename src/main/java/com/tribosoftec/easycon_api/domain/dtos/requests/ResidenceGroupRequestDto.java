@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ResidenceGroupRequestDto {
 
+    private Long id;
     private Long condm_id;
     private String name;
     private String description;
