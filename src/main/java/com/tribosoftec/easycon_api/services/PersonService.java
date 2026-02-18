@@ -13,11 +13,6 @@ import com.tribosoftec.easycon_api.domain.dtos.responses.PersonResponseDto;
 import com.tribosoftec.easycon_api.domain.dtos.responses.PersonTypeResponseDto;
 import com.tribosoftec.easycon_api.repositories.PersonRepository;
 
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.sql.Timestamp;
-
 @Service
 public class PersonService {
 
