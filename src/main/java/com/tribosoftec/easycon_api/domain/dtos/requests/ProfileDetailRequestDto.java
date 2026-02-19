@@ -1,6 +1,6 @@
 package com.tribosoftec.easycon_api.domain.dtos.requests;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,9 +13,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ProfileDetailRequestDto {
 
-    private Integer profileId;
-    private Integer residentId;
-    private Timestamp startedAt; 
-    private Timestamp endedAt;   
+    private Long id;
+    private Long profileId;
+    private Long residentId;
+    private Date startedAt; 
+    private Date endedAt;  
+    private Boolean active;
 
 }

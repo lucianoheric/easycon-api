@@ -57,7 +57,15 @@ public class ProfileService {
 
     }
 
-    public ProfileResponseDto findById(Long id) {
+    public Profile findById(Long id) {
+        try {
+            return profileRepository.findById(id).orElseThrow(() -> new RuntimeException("Profile not found with ID: " + id));
+        } catch (Exception e) {
+            throw new RuntimeException("Error fetching profile: " + e.getMessage(), e);
+        }
+    }
+
+    public ProfileResponseDto findProfileById(Long id) {
         try {
             Profile profile = profileRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Profile not found with ID: " + id));

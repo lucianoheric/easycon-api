@@ -34,7 +34,7 @@ public class ProfileController {
     // Get a profile by ID
     @GetMapping("/{id}")
     public ProfileResponseDto getProfileById(@PathVariable Long id) {
-        return profileService.findById(id);
+        return profileService.findProfileById(id);
     }    
 
     // Update an existing profile

@@ -11,11 +11,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ResidentRequestDto {
 
+    private Long id;
     private Long residence_id;
     private String name;
     private String observation;
     private Boolean is_default;
-    
-
+    private Boolean active;
 
 }

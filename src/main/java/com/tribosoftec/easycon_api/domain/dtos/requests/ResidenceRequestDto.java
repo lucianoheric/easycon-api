@@ -15,5 +15,6 @@ public class ResidenceRequestDto {
     private Long residenceGroupId;
     private String number;
     private String description;
+    private Boolean active;
 
 }

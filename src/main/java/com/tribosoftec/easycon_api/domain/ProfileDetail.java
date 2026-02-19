@@ -10,6 +10,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import java.sql.Date;
 import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +29,7 @@ public class ProfileDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "profile_id", nullable = false)
@@ -37,8 +39,8 @@ public class ProfileDetail {
     @JoinColumn(name = "resident_id", nullable = false)
     private Resident resident;
 
-    private Timestamp startedAt;
-    private Timestamp endedAt;
+    private Date startedAt;
+    private Date endedAt;
 
     @Column(nullable = false)
     private Boolean active = true;

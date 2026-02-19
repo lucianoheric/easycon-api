@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;   
 import java.time.format.DateTimeFormatter;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.ZoneId;
 
@@ -14,11 +15,11 @@ import java.time.ZoneId;
 @NoArgsConstructor
 public class ProfileDetailResponseDto {
 
-    private Integer id;
+    private Long id;
     private ProfileResponseDto profile;
     private ResidentResponseDto resident;
-    private Timestamp started_at;
-    private Timestamp ended_at;
+    private Date started_at;
+    private Date ended_at;
     private Boolean active;
     private Timestamp created_at;
     private Timestamp updated_at;
@@ -55,7 +56,7 @@ public class ProfileDetailResponseDto {
                 : null;
     }
 
-    public void setStarted_at(Timestamp started_at) {
+    public void setStarted_at(Date started_at) {
         this.started_at = started_at;
     }
 
@@ -65,7 +66,7 @@ public class ProfileDetailResponseDto {
                 : null;
     }
 
-    public void setEnded_at(Timestamp ended_at) {
+    public void setEnded_at(Date ended_at) {
         this.ended_at = ended_at;
     } 
 

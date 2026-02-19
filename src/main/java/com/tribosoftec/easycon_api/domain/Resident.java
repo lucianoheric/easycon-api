@@ -44,6 +44,9 @@ public class Resident {
     @Column(name = "is_default", nullable = false)
     private Boolean isDefault = false;
 
+    @Column(name = "active", nullable = false)
+    private Boolean active = true;    
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;
