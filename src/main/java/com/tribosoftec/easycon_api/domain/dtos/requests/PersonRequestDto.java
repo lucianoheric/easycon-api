@@ -4,7 +4,6 @@ public class PersonRequestDto {
 
     private String name;
     private String shortName;
-    private String email;
     private Long personTypeId;
     private String document;
     private boolean active;
@@ -24,14 +23,6 @@ public class PersonRequestDto {
 
     public void setShortName(String shortName) {
         this.shortName = shortName;
-    }
-
-    public String getEmail() {
-        return email;
-    }           
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public Long getPersonTypeId() {

@@ -1,6 +1,7 @@
 package com.tribosoftec.easycon_api.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,8 +28,8 @@ public class ProfileDetailService {
         try{
             ProfileDetailResponseDto responseDto = new ProfileDetailResponseDto();
             responseDto.setId(profileDetail.getId());
-            responseDto.setProfile(profileService.getProfile(profileDetail.getProfile()));
-            responseDto.setResident(residentService.getResident(profileDetail.getResident()));
+            responseDto.setProfile(profileService.getProfile(profileService.findById(profileDetail.getProfile().getId())));
+            responseDto.setResident(residentService.getResident(residentService.findById(profileDetail.getResident().getId())));
             responseDto.setStarted_at(profileDetail.getStartedAt());
             responseDto.setEnded_at(profileDetail.getEndedAt());
             responseDto.setActive(profileDetail.getActive());
@@ -37,6 +38,19 @@ public class ProfileDetailService {
             return responseDto;
         } catch (Exception e) {
             throw new RuntimeException("Error fetching profile detail", e);
+        }
+    }
+
+
+    public List<ProfileDetailResponseDto> getProfileDetailList(List<ProfileDetail> profileDetail) {
+        try {
+            List<ProfileDetailResponseDto> responseDto =
+                profileDetail.stream()
+                        .map(this::getProfileDetail)
+                        .collect(Collectors.toList());
+            return responseDto;
+        } catch (Exception e) {
+            throw new RuntimeException("Error converting profile detail: " + e.getMessage());
         }
     }
 
@@ -69,6 +83,7 @@ public class ProfileDetailService {
                     .resident(Resident.builder().id(resident.getId()).build())
                     .startedAt(requestDto.getStartedAt())
                     .endedAt(requestDto.getEndedAt())
+                    .active(true)
                     .build();
             profileDetailRepository.save(profileDetail);
             return getProfileDetail(profileDetail);
@@ -87,6 +102,7 @@ public class ProfileDetailService {
             profileDetail.setResident(Resident.builder().id(resident.getId()).build());
             profileDetail.setStartedAt(requestDto.getStartedAt());
             profileDetail.setEndedAt(requestDto.getEndedAt());
+            profileDetail.setActive(requestDto.getActive());
             profileDetailRepository.save(profileDetail);
             return getProfileDetail(profileDetail);
         } catch (Exception e) {
@@ -113,7 +129,8 @@ public class ProfileDetailService {
 
     public List<ProfileDetailResponseDto> findByProfileId(Long profileId) {
         try {
-            return profileDetailRepository.findByProfileId(profileId);
+            List<ProfileDetail> profileDetails = profileDetailRepository.findByProfileId(profileId);
+            return getProfileDetailList(profileDetails);
         } catch (Exception e) {
             throw new RuntimeException("Error fetching profile details by profile ID: " + e.getMessage());
         }

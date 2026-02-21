@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.tribosoftec.easycon_api.domain.Condm;
 import com.tribosoftec.easycon_api.domain.dtos.requests.CondmRequestDto;
 import com.tribosoftec.easycon_api.domain.dtos.responses.CondmResponseDto;
+import com.tribosoftec.easycon_api.repositories.CondmRepository;
 
 @Service
 public class CondmService {

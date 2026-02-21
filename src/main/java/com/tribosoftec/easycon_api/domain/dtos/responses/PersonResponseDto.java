@@ -8,8 +8,7 @@ public class PersonResponseDto {
 
     private Long id;
     private String name;
-    private String shortName;   
-    private String email;
+    private String shortName;  
     private PersonTypeResponseDto personType;
     private String document;
     private boolean active; 
@@ -21,14 +20,13 @@ public class PersonResponseDto {
         DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
                 .withZone(ZoneId.of("America/Sao_Paulo"));
 
-    public PersonResponseDto(Long id, String name, String shortName, PersonTypeResponseDto personType, String document, boolean active, String email, Timestamp activated_at, Timestamp created_at, Timestamp updated_at) {
+    public PersonResponseDto(Long id, String name, String shortName, PersonTypeResponseDto personType, String document, boolean active, Timestamp activated_at, Timestamp created_at, Timestamp updated_at) {
         this.id = id;
         this.name = name;
         this.shortName = shortName;
         this.personType = personType;
         this.document = document;        
         this.active = active;
-        this.email = email;
         this.activated_at = activated_at;
         this.created_at = created_at;
         this.updated_at = updated_at;
@@ -62,14 +60,6 @@ public class PersonResponseDto {
 
     public void setShortName(String shortName) {
         this.shortName = shortName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public PersonTypeResponseDto getPersonType() {

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -30,7 +31,7 @@ public class ResidenceController {
         return this.findById(id);
     }
     
-    public ResidenceResponseDto findById(Long id) {
+    private ResidenceResponseDto findById(Long id) {
         try {
             return residenceService.findResidenceById(id);
         } catch (Exception e) {
@@ -39,7 +40,7 @@ public class ResidenceController {
     }
 
     @PostMapping
-    public ResidenceResponseDto createResidence(ResidenceRequestDto requestDto) {
+    public ResidenceResponseDto createResidence(@RequestBody ResidenceRequestDto requestDto) {
         try {
             return residenceService.createResidence(requestDto);
         } catch (Exception e) {
@@ -48,7 +49,7 @@ public class ResidenceController {
     }
 
     @PutMapping
-    public ResidenceResponseDto updateResidence(ResidenceRequestDto requestDto) {
+    public ResidenceResponseDto updateResidence(@RequestBody ResidenceRequestDto requestDto) {
         try {
             return residenceService.updateResidence(requestDto);
         } catch (Exception e) {
@@ -66,7 +67,7 @@ public class ResidenceController {
     }
 
     @PostMapping("/active")
-    public ResidenceResponseDto setActiveResidence(ResidenceRequestDto requestDto) {
+    public ResidenceResponseDto setActiveResidence(@RequestBody ResidenceRequestDto requestDto) {
         try {
             return residenceService.setActiveResidence(requestDto);
         } catch (Exception e) {

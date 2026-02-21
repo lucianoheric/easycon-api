@@ -1,6 +1,7 @@
 package com.tribosoftec.easycon_api.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,18 @@ public class ResidenceService {
             responseDto.setResidenceGroup(residenceGroupService.getResidenceGroup(residence.getResidenceGroup()));
             responseDto.setCreated_at(residence.getCreatedAt());
             responseDto.setUpdated_at(residence.getUpdatedAt());
+            return responseDto;
+        } catch (Exception e) {
+            throw new RuntimeException("Error converting residence: " + e.getMessage());
+        }
+    }
+
+    public List<ResidenceResponseDto> getResidenceList(List<Residence> residence) {
+        try {
+            List<ResidenceResponseDto> responseDto =
+                residence.stream()
+                        .map(this::getResidence)
+                        .collect(Collectors.toList());
             return responseDto;
         } catch (Exception e) {
             throw new RuntimeException("Error converting residence: " + e.getMessage());
@@ -98,7 +111,7 @@ public class ResidenceService {
     public List<ResidenceResponseDto> findResidenceByResidenceGroupId(Long residenceGroupId) {
         try {
             var residences = residenceRepository.findByResidenceGroupId(residenceGroupId);
-            return residences;
+            return getResidenceList(residences);
         } catch (Exception e) {
             throw new RuntimeException("Error fetching residence by residence group ID: " + e.getMessage());
         }

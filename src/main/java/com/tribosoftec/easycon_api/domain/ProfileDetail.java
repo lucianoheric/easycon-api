@@ -10,9 +10,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,8 +39,8 @@ public class ProfileDetail {
     @JoinColumn(name = "resident_id", nullable = false)
     private Resident resident;
 
-    private Date startedAt;
-    private Date endedAt;
+    private LocalDate startedAt;
+    private LocalDate endedAt;
 
     @Column(nullable = false)
     private Boolean active = true;

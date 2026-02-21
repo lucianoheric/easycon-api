@@ -1,7 +1,5 @@
 package com.tribosoftec.easycon_api.domain.dtos.requests;
 
-import java.time.LocalDate;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,13 +9,14 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProfileDetailRequestDto {
+public class AdmLoginRequestDto {
 
     private Long id;
-    private Long profileId;
-    private Long residentId;
-    private LocalDate startedAt; 
-    private LocalDate endedAt;  
+    private Long person_id;
+    private String name;       
+    private String email;
+    private String passwd;
+    private Boolean alter_passwd;
     private Boolean active;
 
 }

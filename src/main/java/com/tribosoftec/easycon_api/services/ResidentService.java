@@ -1,12 +1,13 @@
 package com.tribosoftec.easycon_api.services;
 
 import java.util.List;
-
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.tribosoftec.easycon_api.domain.Resident;
 import com.tribosoftec.easycon_api.domain.dtos.requests.ResidentRequestDto;
 import com.tribosoftec.easycon_api.domain.dtos.responses.ResidentResponseDto;
+import com.tribosoftec.easycon_api.repositories.ResidentRepository;
 
 @Service
 public class ResidentService {
@@ -39,7 +40,27 @@ public class ResidentService {
         }
         ResidentResponseDto responseDto = new ResidentResponseDto();
         responseDto.setId(resident.getId());
+        responseDto.setResidence(residenceService.findResidenceById(resident.getResidence().getId()));
+        responseDto.setName(resident.getName());
+        responseDto.setObservation(resident.getObservation());
+        responseDto.setIs_default(resident.getIsDefault());
+        responseDto.setActive(resident.getActive());
+        responseDto.setCreated_at(resident.getCreatedAt());
+        responseDto.setUpdated_at(resident.getUpdatedAt());
         return responseDto;
+    }
+
+    
+    public List<ResidentResponseDto> getResidentList(List<Resident> resident) {
+        try {
+            List<ResidentResponseDto> responseDto =
+                resident.stream()
+                        .map(this::getResident)
+                        .collect(Collectors.toList());
+            return responseDto;
+        } catch (Exception e) {
+            throw new RuntimeException("Error converting resident: " + e.getMessage());
+        }
     }
 
 
@@ -87,7 +108,8 @@ public class ResidentService {
 
     public List<ResidentResponseDto> findByResidenceId(Long residenceId) {
         try {
-            return residentRepository.findByResidenceId(residenceId);
+            List<Resident> residents = residentRepository.findByResidenceId(residenceId);
+            return this.getResidentList(residents);
         } catch (Exception e) {
             throw new RuntimeException("Error fetching residents by residence ID: " + e.getMessage());
         }

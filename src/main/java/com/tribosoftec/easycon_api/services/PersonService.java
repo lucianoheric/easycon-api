@@ -44,7 +44,6 @@ public class PersonService {
                 personTypeResponseDto,
                 person.getDocument(),
                 person.getActive(),
-                person.getEmail(),
                 person.getActivatedAt(),
                 person.getCreatedAt(),
                 person.getUpdatedAt()
@@ -55,7 +54,6 @@ public class PersonService {
         try {   
             Person newPerson = new Person();
             newPerson.setName(person.getName());
-            newPerson.setEmail(person.getEmail());
             newPerson.setShortName(person.getShortName());
             newPerson.setDocument(person.getDocument());
             newPerson.setActive(person.isActive()); 
@@ -67,7 +65,6 @@ public class PersonService {
             responseDto.setId(person2.getId());
             responseDto.setName(person2.getName());
             responseDto.setShortName(person2.getShortName());
-            responseDto.setEmail(person2.getEmail());
             responseDto.setDocument(person2.getDocument());
             responseDto.setActive(person2.getActive());
             responseDto.setCreated_at(person2.getCreatedAt());
@@ -100,7 +97,6 @@ public class PersonService {
                         personTypeResponseDto,
                         person.getDocument(),
                         person.getActive(),
-                        person.getEmail(),
                         person.getActivatedAt(),
                         person.getCreatedAt(),
                         person.getUpdatedAt()
@@ -167,7 +163,6 @@ public class PersonService {
                     .orElseThrow(() -> new RuntimeException("Person not found with ID: " + person.getId()));
             existingPerson.setName(person.getName());
             existingPerson.setShortName(person.getShortName());
-            existingPerson.setEmail(person.getEmail());
             existingPerson.setDocument(person.getDocument());
             existingPerson.setActive(person.isActive());
             PersonType personType = personTypeService.findById(person.getPersonTypeId());
