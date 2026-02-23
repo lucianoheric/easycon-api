@@ -49,11 +49,16 @@ public class AdmLogin {
     private Boolean alter_passwd = true;    
 
     @CreationTimestamp
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     private Timestamp createdAt;
 
-    @UpdateTimestamp
     @Column(name = "updated_at")
     private Timestamp updatedAt;
+
+    @Column(name = "confirmed_at")
+    private Timestamp confirmedAt;
+
+    @Column(name = "token", nullable = false, length = 150)
+    private String token;    
 
 }

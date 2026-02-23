@@ -1,5 +1,7 @@
 package com.tribosoftec.easycon_api.domain.dtos.requests;
 
+import java.sql.Timestamp;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,5 +20,6 @@ public class AdmLoginRequestDto {
     private String passwd;
     private Boolean alter_passwd;
     private Boolean active;
+    private String token;
 
 }

@@ -16,6 +16,7 @@ import java.util.List;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
+
     private static final List<String> PUBLIC_URLS = List.of(
             "/api/login/login",
             "/api/login/token",
@@ -30,27 +31,26 @@ public class JwtFilter extends OncePerRequestFilter {
         this.admLoginRepositrory = admLoginRepositrory;
     }
 
+    
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
+        //System.out.println(">>> PATH: " + request.getRequestURI());
+        //System.out.println(">>> METHOD: " + request.getMethod());
         String path = request.getRequestURI();
         return PUBLIC_URLS.stream().anyMatch(path::startsWith);
-    }
-
+    }    
+    
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
-
         String authHeader = request.getHeader("Authorization");
-
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
             String email = jwtService.extractEmail(token);
-
             AdmLogin login = admLoginRepositrory.findByEmail(email);
-
             if (login != null) {
                 UsernamePasswordAuthenticationToken auth =
                         new UsernamePasswordAuthenticationToken(
@@ -58,12 +58,11 @@ public class JwtFilter extends OncePerRequestFilter {
                                 null,
                                 List.of()
                         );
-
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         }
-
         filterChain.doFilter(request, response);
     }
+    
 }
 

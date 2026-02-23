@@ -23,6 +23,7 @@ public class AdmLoginResponseDto {
     private Boolean active;
     private Timestamp created_at;
     private Timestamp updated_at;
+    private Timestamp confirmed_at;
     private String token;
 
     private static final DateTimeFormatter BR_FORMAT =
@@ -49,5 +50,15 @@ public class AdmLoginResponseDto {
     public void setUpdated_at(Timestamp updated_at) {
         this.updated_at = updated_at;
     }     
+
+    public String confirmed_at() {
+        return confirmed_at != null
+                ? BR_FORMAT.format(confirmed_at.toInstant())
+                : null;
+    }
+
+    public void setConfirmed_at(Timestamp confirmed_at) {
+        this.confirmed_at = confirmed_at;
+    }       
 
 }
