@@ -42,5 +42,5 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /home/ec2-user/easycon
-            docker compose pull
-            docker compose up -d
+            docker-compose pull
+            docker-compose up -d
