@@ -1,9 +1,11 @@
 package com.tribosoftec.easycon_api.security;
 
-import com.tribosoftec.easycon_api.domain.AdmLogin;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -13,14 +15,17 @@ import java.security.Key;
 @Service
 public class JwtService {
 
-   /* @Value("${JWT_SECRET}")
+    // Lê o segredo do .env (variável JWT_SECRET)
+    @Value("${JWT_SECRET}")
     private String secret;
-*/
 
-    private static final String secret =
-            "x6KWKxmlRKPgX9awX7mt3nssi7O3ezk1BEMs3jF56Yc";
+    private Key key;
 
-    private final Key key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    // Inicializa a Key depois que o secret for injetado
+    @PostConstruct
+    public void init() {
+        this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    }
 
     public String generateToken(String email) {
         return Jwts.builder()
